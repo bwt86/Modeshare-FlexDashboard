@@ -28,7 +28,7 @@ data <- read_csv("Data/Commuting By Sex.csv")
 cleaned <- data %>% select(label = `Label (Grouping)`,Total = `United States!!Total!!Estimate`, Male = `United States!!Male!!Estimate`,Female = `United States!!Female!!Estimate`) %>% mutate(label = str_trim(label))
 
 factor <- cleaned %>% slice(1) %>% mutate(Total = str_replace_all(Total, ',','')) %>% mutate(Total = as.numeric(Total)) 
-filtered <- cleaned %>% slice(4:8, 10:14) %>% select(label, total = Total) %>% mutate(total = str_replace(total, '%', '')) %>% mutate(total = as.numeric(total)) %>% mutate(total = (total/100) * factor$Total) %>% mutate(total = round(total, digits = 0))
+filtered <- cleaned %>% slice(4:5, 10:14) %>% select(label, total = Total) %>% mutate(total = str_replace(total, '%', '')) %>% mutate(total = as.numeric(total)) %>% mutate(total = (total/100) * factor$Total) %>% mutate(total = round(total, digits = 0))
 ```
 
 Column
