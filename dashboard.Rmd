@@ -1,0 +1,51 @@
+---
+title: "Modesshare Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    theme:
+      bg: "#FFFFFF"
+      fg: "#000000" 
+      primary: "#5776ff"
+      base_font:
+        google: Prompt
+      code_font:
+        google: JetBrains Mono
+    orientation: columns
+    vertical_layout: fill
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(tidyverse)
+library(plotly)
+```
+
+
+```{r}
+# Data from https://data.census.gov/table?q=commute&tid=ACSST5Y2021.S0801&moe=false&tp=true
+data <- read_csv("Data/Commuting By Sex.csv")
+
+cleaned <- data %>% select(label = `Label (Grouping)`,Total = `United States!!Total!!Estimate`, Male = `United States!!Male!!Estimate`,Female = `United States!!Female!!Estimate`) %>% mutate(label = str_trim(label))
+
+factor <- cleaned %>% slice(1) %>% mutate(Total = str_replace_all(Total, ',','')) %>% mutate(Total = as.numeric(Total)) 
+filtered <- cleaned %>% slice(4:8, 10:14) %>% select(label, total = Total) %>% mutate(total = str_replace(total, '%', '')) %>% mutate(total = as.numeric(total)) %>% mutate(total = (total/100) * factor$Total) %>% mutate(total = round(total, digits = 0))
+```
+
+Column {data-width=850 .tabset}
+-----------------------------------------------------------------------
+
+### Modeshare Percentage
+
+```{r}
+fig <- plot_ly(data = filtered, labels = ~label, values = ~total,type = 'pie') %>% layout(title = 'Transit Modeshare in the United States (2021)', xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE), yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+
+fig
+```
+
+### Chart B
+
+```{r}
+
+```
+
+
