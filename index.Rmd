@@ -37,7 +37,8 @@ Column
 ### Modeshare Percentage
 
 ```{r}
-fig <- plot_ly(data = filtered, labels = ~label, values = ~total,type = 'pie') %>% layout(title = 'Transit Modeshare in the United States (2021)', xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE), yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+fig <- plot_ly(data = filtered, labels = ~label, values = ~total,type = 'pie', showlegend = FALSE,
+        textinfo = 'label+percent') %>% layout(title = 'Transit Modeshare in the United States (2021)', xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE), yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
 
 fig
 ```
