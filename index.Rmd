@@ -31,7 +31,7 @@ factor <- cleaned %>% slice(1) %>% mutate(Total = str_replace_all(Total, ',','')
 filtered <- cleaned %>% slice(4:8, 10:14) %>% select(label, total = Total) %>% mutate(total = str_replace(total, '%', '')) %>% mutate(total = as.numeric(total)) %>% mutate(total = (total/100) * factor$Total) %>% mutate(total = round(total, digits = 0))
 ```
 
-Column {data-width=850 .tabset}
+Column
 -----------------------------------------------------------------------
 
 ### Modeshare Percentage
@@ -42,10 +42,5 @@ fig <- plot_ly(data = filtered, labels = ~label, values = ~total,type = 'pie') %
 fig
 ```
 
-### Chart B
-
-```{r}
-
-```
 
 
